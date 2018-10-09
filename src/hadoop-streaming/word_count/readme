@@ -16,3 +16,9 @@ yarn jar /usr/hdp/2.5.3.0-37/hadoop-mapreduce/hadoop-streaming.jar \
 
 # 验证结果
 hdfs dfs -cat /user/liuhongliang/shstrm_wc_out_01/*
+
+# 相关说明
+其实上面的过程本质上执行了如下命令
+cat wc_src | tr ' ' '\n' | awk '{print $1}' | sort | uniq -c | awk '{print $2"\t"$1}'
+tr ' ' '\n' 的作用是将空格替换为换行\n
+uniq -c 的作用是按行去重，并在每行前面显示出此行重复的次数
