@@ -1,0 +1,7 @@
+touch hw.sh
+chmod 755 hw.sh
+vim hw.sh
+
+#!/usr/bin/env bash
+
+echo 'hello 我的 world'

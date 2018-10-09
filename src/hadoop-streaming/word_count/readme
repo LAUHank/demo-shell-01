@@ -1,0 +1,18 @@
+# shell streaming word count
+
+# 本地测试
+cat wc_src | ./wc_m.sh | sort | ./wc_r.sh
+hdfs dfs -copyFromLocal wc_src /user/liuhongliang/wc_src.txt
+
+# 集群测试
+yarn jar /usr/hdp/2.5.3.0-37/hadoop-mapreduce/hadoop-streaming.jar \
+-Dmapreduce.job.name="sh-strm-wc" \
+-input /user/liuhongliang/wc_src.txt \
+-output /user/liuhongliang/shstrm_wc_out_01 \
+-mapper "./wc_m.sh" \
+-reducer "./wc_r.sh" \
+-file wc_m.sh \
+-file wc_r.sh 
+
+# 验证结果
+hdfs dfs -cat /user/liuhongliang/shstrm_wc_out_01/*
